@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Word Finder</title>
+</head>
+<body>
+    <h1>Find Words</h1>
+    <form method="POST">
+        <label>Word length:</label>
+        <input type="number" name="length" required><br><br>
+
+        <label>Starts with:</label>
+        <input type="text" name="start" maxlength="1"><br><br>
+
+        <label>Ends with:</label>
+        <input type="text" name="end" maxlength="1"><br><br>
+
+        <button type="submit">Find Words</button>
+    </form>
+
+    {% if results %}
+        <h2>Results:</h2>
+        <ul>
+        {% for word in results %}
+            <li>{{ word }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
