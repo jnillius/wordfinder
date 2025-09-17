@@ -7,13 +7,16 @@
     <h1>Find Words</h1>
     <form method="POST">
         <label>Word length:</label>
-        <input type="number" name="length" required><br><br>
+        <input type="number" name="length"><br><br>
 
         <label>Starts with:</label>
         <input type="text" name="start" maxlength="1"><br><br>
 
         <label>Ends with:</label>
         <input type="text" name="end" maxlength="1"><br><br>
+
+        <label>Contains:</label>
+        <input type="text" name="contains"><br><br>
 
         <button type="submit">Find Words</button>
     </form>

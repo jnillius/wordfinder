@@ -1,5 +1,4 @@
 from flask import Flask, request, render_template
-
 app = Flask(__name__)
 
 # Load word list
@@ -10,12 +9,22 @@ with open("words.txt") as f:
 def index():
     results = []
     if request.method == "POST":
-        length = int(request.form.get("length"))
-        start = request.form.get("start").lower()
-        end = request.form.get("end").lower()
+        length_str = request.form.get("length")
+        length = int(length_str) if length_str else 0
+        start = request.form.get("start", "").lower()
+        end = request.form.get("end", "").lower()
+        contains = request.form.get("contains", "").lower()
 
         # Filtering words
-        results = [w for w in words if len(w) == length and w.startswith(start) and w.endswith(end)]
+        results = words
+        if length > 0:
+            results = [w for w in results if len(w) == length]
+        if start:
+            results = [w for w in results if w.startswith(start)]
+        if end:
+            results = [w for w in results if w.endswith(end)]
+        if contains:
+            results = [w for w in results if contains in w]
 
     return render_template("index.html", results=results)
 
