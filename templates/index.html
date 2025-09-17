@@ -2,35 +2,48 @@
 <html>
 <head>
     <title>Word Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+<div class="container">
     <h1>Find Words</h1>
     <form method="POST">
-        <label>Word length:</label>
-        <input type="number" name="length"><br><br>
+        <div class="form-group">
+            <label>Word length:</label>
+            <input type="number" name="length">
+        </div>
 
-        <label>Starts with:</label>
-        <input type="text" name="start" maxlength="1"><br><br>
+        <div class="form-group">
+            <label>Starts with:</label>
+            <input type="text" name="start" maxlength="1">
+        </div>
 
-        <label>Ends with:</label>
-        <input type="text" name="end" maxlength="1"><br><br>
+        <div class="form-group">
+            <label>Ends with:</label>
+            <input type="text" name="end" maxlength="1">
+        </div>
 
-        <label>Contains sequence:</label>
-        <input type="text" name="contains"><br><br>
+        <div class="form-group">
+            <label>Contains sequence:</label>
+            <input type="text" name="contains">
+        </div>
 
-        <label>Contains all letters:</label>
-        <input type="text" name="contains_all"><br><br>
+        <div class="form-group">
+            <label>Contains all letters:</label>
+            <input type="text" name="contains_all">
+        </div>
 
         <button type="submit">Find Words</button>
     </form>
 
     {% if results %}
-        <h2>Results:</h2>
-        <ul>
+        <h2>Results ({{ results|length }})</h2>
+        <ul id="results-list">
         {% for word in results %}
             <li>{{ word }}</li>
         {% endfor %}
         </ul>
     {% endif %}
+</div>
 </body>
 </html>
