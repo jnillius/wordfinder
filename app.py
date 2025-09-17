@@ -14,6 +14,7 @@ def index():
         start = request.form.get("start", "").lower()
         end = request.form.get("end", "").lower()
         contains = request.form.get("contains", "").lower()
+        contains_all = request.form.get("contains_all", "").lower()
 
         # Filtering words
         results = words
@@ -25,6 +26,8 @@ def index():
             results = [w for w in results if w.endswith(end)]
         if contains:
             results = [w for w in results if contains in w]
+        if contains_all:
+            results = [w for w in results if all(char in w for char in contains_all)]
 
     return render_template("index.html", results=results)
 
