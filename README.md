@@ -6,3 +6,6 @@ Right now I have taken the words.txt file from ´https://github.com/dwyl/english
 
 # How vibecoded is this?
 Very.
+
+# TODO:
+* add better rescriptions/placeholders for the filter fields.

@@ -3,6 +3,36 @@
 <head>
     <title>Word Finder</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            border-bottom: 1px dotted black;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 300px;
+            background-color: #555;
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -150px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -10,17 +40,28 @@
     <form method="POST">
         <div class="form-group">
             <label>Word length:</label>
-            <input type="number" name="length">
+            <input type="number" name="length" required value="{{ request.form.length }}">
         </div>
 
         <div class="form-group">
             <label>Starts with:</label>
-            <input type="text" name="start" maxlength="1">
+            <input type="text" name="start" maxlength="1" value="{{ request.form.start }}">
         </div>
 
         <div class="form-group">
             <label>Ends with:</label>
-            <input type="text" name="end" maxlength="1">
+            <input type="text" name="end" maxlength="1" value="{{ request.form.end }}">
+        </div>
+
+        <div class="form-group">
+            <label>Word type:</label>
+            <select name="pos">
+                <option value="any" {% if request.form.pos == 'any' %}selected{% endif %}>Any</option>
+                <option value="noun" {% if request.form.pos == 'noun' %}selected{% endif %}>Noun</option>
+                <option value="verb" {% if request.form.pos == 'verb' %}selected{% endif %}>Verb</option>
+                <option value="adjective" {% if request.form.pos == 'adjective' %}selected{% endif %}>Adjective</option>
+                <option value="adverb" {% if request.form.pos == 'adverb' %}selected{% endif %}>Adverb</option>
+            </select>
         </div>
 
         <div class="form-group">
@@ -44,8 +85,18 @@
     {% if results %}
         <h2>Results ({{ results|length }})</h2>
         <ul id="results-list">
-        {% for word in results %}
-            <li>{{ word }}</li>
+        {% for item in results %}
+            <li>
+                <strong>{{ item.word }}</strong> 
+                {% if item.pos and item.pos != 'unknown' %}
+                    (<em>{{ item.pos }}</em>)
+                {% endif %}
+                {% if item.definition %}
+                    <div class="tooltip">ⓘ
+                        <span class="tooltiptext">{{ item.definition }}</span>
+                    </div>
+                {% endif %}
+            </li>
         {% endfor %}
         </ul>
     {% endif %}
