@@ -40,43 +40,54 @@
     <form method="POST">
         <div class="form-group">
             <label>Word length:</label>
-            <input type="number" name="length" required value="{{ request.form.length }}">
+            <input type="number" name="length" value="{{ request.form.length }}" min="1">
         </div>
 
         <div class="form-group">
             <label>Starts with:</label>
-            <input type="text" name="start" maxlength="1" value="{{ request.form.start }}">
+            <input type="text" name="start" value="{{ request.form.start }}">
         </div>
 
         <div class="form-group">
             <label>Ends with:</label>
-            <input type="text" name="end" maxlength="1" value="{{ request.form.end }}">
+            <input type="text" name="end" value="{{ request.form.end }}">
         </div>
 
         <div class="form-group">
             <label>Word type:</label>
             <select name="pos">
                 <option value="any" {% if request.form.pos == 'any' %}selected{% endif %}>Any</option>
-                <option value="noun" {% if request.form.pos == 'noun' %}selected{% endif %}>Noun</option>
-                <option value="verb" {% if request.form.pos == 'verb' %}selected{% endif %}>Verb</option>
                 <option value="adjective" {% if request.form.pos == 'adjective' %}selected{% endif %}>Adjective</option>
+                <option value="adposition" {% if request.form.pos == 'adposition' %}selected{% endif %}>Adposition</option>
                 <option value="adverb" {% if request.form.pos == 'adverb' %}selected{% endif %}>Adverb</option>
+                <option value="auxiliary" {% if request.form.pos == 'auxiliary' %}selected{% endif %}>Auxiliary</option>
+                <option value="conjunction" {% if request.form.pos == 'conjunction' %}selected{% endif %}>Conjunction</option>
+                <option value="determiner" {% if request.form.pos == 'determiner' %}selected{% endif %}>Determiner</option>
+                <option value="interjection" {% if request.form.pos == 'interjection' %}selected{% endif %}>Interjection</option>
+                <option value="noun" {% if request.form.pos == 'noun' %}selected{% endif %}>Noun</option>
+                <option value="numeral" {% if request.form.pos == 'numeral' %}selected{% endif %}>Numeral</option>
+                <option value="particle" {% if request.form.pos == 'particle' %}selected{% endif %}>Particle</option>
+                <option value="pronoun" {% if request.form.pos == 'pronoun' %}selected{% endif %}>Pronoun</option>
+                <option value="proper noun" {% if request.form.pos == 'proper noun' %}selected{% endif %}>Proper Noun</option>
+                <option value="punctuation" {% if request.form.pos == 'punctuation' %}selected{% endif %}>Punctuation</option>
+                <option value="verb" {% if request.form.pos == 'verb' %}selected{% endif %}>Verb</option>
+                <option value="unknown" {% if request.form.pos == 'unknown' %}selected{% endif %}>Unknown</option>
             </select>
         </div>
 
         <div class="form-group">
             <label>Contains sequence:</label>
-            <input type="text" name="contains">
+            <input type="text" name="contains" placeholder="e.g. 'crabcatcher' contains sequence 'abc'">
         </div>
 
         <div class="form-group">
             <label>Contains all letters:</label>
-            <input type="text" name="contains_all">
+            <input type="text" name="contains_all" placeholder="e.g. 'bacon' contains letters 'abc'">
         </div>
 
         <div class="form-group">
             <label>Positional letters:</label>
-            <input type="text" name="positions" placeholder="e.g., __b__ for a 5-letter word">
+            <input type="text" name="positions" placeholder="e.g. '__bu_' pattern finds 'album'">
         </div>
 
         <button type="submit">Find Words</button>
@@ -87,7 +98,7 @@
         <ul id="results-list">
         {% for item in results %}
             <li>
-                <strong>{{ item.word }}</strong> 
+                <strong>{{ item.word }}</strong>
                 {% if item.pos and item.pos != 'unknown' %}
                     (<em>{{ item.pos }}</em>)
                 {% endif %}
